@@ -1,16 +1,5 @@
-# Use Amazon Linux 2023 base image
-FROM amazonlinux:2023
+FROM nginx
 
-# Install Apache (httpd)
-RUN dnf update -y && \
-    dnf install -y httpd && \
-    dnf clean all
+ARG SERVICE
 
-# Copy website content
-COPY index.html /var/www/html/
-
-# Expose port 80
-EXPOSE 80
-
-# Start Apache in foreground
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+RUN sh -c 'echo "<h1>${SERVICE} Service Running</h1>" > /usr/share/nginx/html/index.html'
